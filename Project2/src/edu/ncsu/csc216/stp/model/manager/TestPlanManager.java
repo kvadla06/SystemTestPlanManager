@@ -111,6 +111,7 @@ public class TestPlanManager<E extends Comparable<E>> {
 	
 	/**
 	 * Removes the current test plan and is set to the failing test list
+	 * @throws if the currentTestPlan is an FailingTestList with the message “The Failing Tests list may not be deleted.”
 	 */
 	public void removeTestPlan() {
 		
