@@ -70,8 +70,8 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 * Gets the name of the test plans
 	 * @return list of names of test plans
 	 */
-	public String getTestPlanNames() {
-		return "";
+	public String[] getTestPlanNames() {
+		return null;
 	}
 	
 	/**
