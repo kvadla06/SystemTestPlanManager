@@ -3,6 +3,7 @@ package edu.ncsu.csc216.stp.model.test_plans;
 import edu.ncsu.csc216.stp.model.tests.TestCase;
 
 /**
+ * Holds the failing lists of the test plan
  * 
  * @author Kaushya and Kavya
  *
@@ -15,7 +16,6 @@ public class FailingTestList extends AbstractTestPlan {
 	/**
 	 * Constructs a FailingTestList with the expected name.
 	 * 
-	 * @param testPlanName the name of the test plan
 	 * @throws IllegalArgumentException if the proposed name is the same as FAILING_TEST_LIST_NAME (case insensitive)
 	 */
 	public FailingTestList() {
@@ -33,7 +33,7 @@ public class FailingTestList extends AbstractTestPlan {
 
 	/**
 	 * Adds a test case to the FailingTestList 
-	 * @param t the TestCase to add
+	 * @param testPlanName the TestCase to add
 	 */
 	@Override
 	public void setTestPlanName(String testPlanName) {

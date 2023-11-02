@@ -9,6 +9,7 @@ import edu.ncsu.csc216.stp.model.util.ISwapList;
  */
 public class AbstractTestPlan {
 	
+	/** name of test plan*/
 	private static String testPlanName;
 	
 	/**
@@ -86,7 +87,7 @@ public class AbstractTestPlan {
      * @param passing true if the test passed, false otherwise
      * @param actualResults the actual results of the test
      */
-	public void addTestResult(int idx, boolean passing,String actualResults) {
+	public void addTestResult(int idx, boolean passing, String actualResults) {
 		//
 	}
 	
