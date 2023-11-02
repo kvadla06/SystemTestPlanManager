@@ -40,7 +40,7 @@ public class AbstractTestPlan {
 	
 	/**
 	 * Gets the list of TestCases
-	 * @return
+	 * @return list of TestCases
 	 */
 	public ISwapList<TestCase> getTestCases() {
 		return null;

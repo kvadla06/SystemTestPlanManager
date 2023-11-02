@@ -19,6 +19,8 @@ public class SwapList<E> implements ISwapList<E> {
 	/**
 	 * Adds element to list
 	 * @param element element to be added to list
+	 * @throws NullPointerException “Cannot add null element.” if the parameter is null.
+	 * @throws IllegalArgumentException “Cannot add element”
 	 */
 	@Override
 	public void add(E element) {
@@ -30,6 +32,7 @@ public class SwapList<E> implements ISwapList<E> {
 	 * Removes element from list
 	 * @param idx index to remove element from
 	 * @return element being removed
+	 * @throws IndexOutOfBoundsException “Invalid index.” if the index parameter is out of bounds for the list.
 	 */
 	@Override
 	public E remove(int idx) {

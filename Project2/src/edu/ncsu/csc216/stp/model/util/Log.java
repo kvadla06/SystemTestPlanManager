@@ -26,6 +26,7 @@ public class Log<E> implements ILog<E> {
 	/**
 	 * Adds element to log
 	 * @param element element to be added to log
+	 * @throws NullPointerException “Cannot add null element.” if the parameter is null.
 	 */
 	@Override
 	public void add(E element) {
@@ -37,6 +38,7 @@ public class Log<E> implements ILog<E> {
 	 * Gets element from log
 	 * @param idx index to get element from
 	 * @return element in list
+	 * @throws IndexOutOfBoundsException “Invalid index.” if the index parameter is out of bounds for the list.
 	 */
 	@Override
 	public E get(int idx) {
