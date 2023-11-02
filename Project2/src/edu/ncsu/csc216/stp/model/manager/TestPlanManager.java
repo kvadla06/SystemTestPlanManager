@@ -34,7 +34,7 @@ public class TestPlanManager<E extends Comparable<E>> {
 	
 	/**
 	 * Loads test plans from file
-	 * @param fileName file to load test plans from
+	 * @param testPlanFile file to load test plans from
 	 */
 	public void loadTestPlans(File testPlanFile) {
 		
@@ -42,7 +42,7 @@ public class TestPlanManager<E extends Comparable<E>> {
 	
 	/**
 	 * Save test plans to file
-	 * @param fileName file to save test plans to
+	 * @param testPlanFile file to save test plans to
 	 */
 	public void saveTestPlans(File testPlanFile) {
 		

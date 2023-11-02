@@ -29,7 +29,7 @@ public class TestPlanWriter {
      * @param testPlans the list of TestPlans to write to file
      * @throws IllegalArgumentException if unable to save the file
      */
-	public static void writeTestPlanFile(File file,ISortedList<TestPlan> TestPlan) {
+	public static void writeTestPlanFile(File file, ISortedList<TestPlan> testPlans) {
 		//
 		
 	}

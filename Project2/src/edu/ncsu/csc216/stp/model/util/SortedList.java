@@ -58,7 +58,7 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 	
 	/**
 	 * Checks if list already contains the element
-	 * @param E element to be checked
+	 * @param element element to be checked
 	 * @return false if list does not contain element, true if it does
 	 */
 	@Override

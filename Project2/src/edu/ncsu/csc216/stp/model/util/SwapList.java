@@ -6,6 +6,7 @@ package edu.ncsu.csc216.stp.model.util;
 /**
  * Creates a list that swaps elements and moves elements from the front to the back of a list
  * @author Kavya and Kaushya
+ * @param <E> type for the SwapList
  */
 public class SwapList<E> implements ISwapList<E> {
 	

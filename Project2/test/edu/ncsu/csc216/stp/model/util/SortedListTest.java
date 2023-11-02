@@ -8,8 +8,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
 /**
+ * Tests the SortedList class
+ * 
  * @author Kaushya and Kavya
- *
  */
 class SortedListTest {
 
