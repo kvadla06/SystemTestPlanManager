@@ -17,6 +17,9 @@ import edu.ncsu.csc216.stp.model.util.ISortedList;
  */
 public class TestPlanReader {
 	
+	/** 
+	 * TestPlanReader object constructor
+	 */
 	public TestPlanReader() {	
 	}
 	

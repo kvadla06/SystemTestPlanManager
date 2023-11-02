@@ -11,7 +11,7 @@ import edu.ncsu.csc216.stp.model.tests.TestCase;
  * @author Kaushya and Kavya
  *
  */
-public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan>{
+public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan> {
 	
 	/**
      * Constructs a TestPlan with the given name.

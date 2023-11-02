@@ -29,7 +29,7 @@ public class TestResult {
 	 * @param actualResults the actual results from the test execution
 	 * @throws IllegalArgumentException if actualResults is null or an empty string
 	 */
-	public TestResult(boolean passing,String actualResults) {
+	public TestResult(boolean passing, String actualResults) {
 		//
 	}
 	

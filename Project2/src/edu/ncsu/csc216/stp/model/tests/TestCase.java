@@ -122,7 +122,7 @@ public class TestCase {
 	 * @param actualResults the actual results of the test case
 	 * @throws IllegalArgumentException if the TestResult cannot be constructed
 	 */
-	public void addTestResult(boolean passing,String actualResults) {
+	public void addTestResult(boolean passing, String actualResults) {
 		//
 	}
 	
