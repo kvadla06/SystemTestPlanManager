@@ -4,6 +4,7 @@
 package edu.ncsu.csc216.stp.model.tests;
 
 import edu.ncsu.csc216.stp.model.test_plans.TestPlan;
+import edu.ncsu.csc216.stp.model.util.Log;
 
 /**
  * This class manages the information about each individual test case
@@ -22,6 +23,8 @@ public class TestCase {
 	private String expectedResults;
 	/** The associated test plan */
 	private TestPlan testPlan;
+	/** Log to store Testresult objects */
+	private Log<TestResult> testResults;
 	
 	/**
 	 * Constructs a TestCase with the given parameters
@@ -32,7 +35,12 @@ public class TestCase {
 	 * @param expectedResults the expected results of the test case
 	 */
 	public TestCase(String testCaseId, String testType, String testDescription, String expectedResults) {
-		//
+		setTestCaseId(testCaseId);
+        setTestType(testType);
+        setTestDescription(testDescription);
+        setExpectedResults(expectedResults);
+        this.testResults = new Log<>();
+        this.testPlan = null;
 	}
 	
 	/**
@@ -41,7 +49,7 @@ public class TestCase {
 	 * @return the test case ID
 	 */
 	public String getTestCaseId() {
-		return null;
+		return testCaseId;
 	}
 	
 	/**
@@ -51,7 +59,10 @@ public class TestCase {
 	 * @throws IllegalArgumentException if the ID is null or empty
 	 */
 	private void setTestCaseId(String testCaseId) {
-		//
+		if (testCaseId == null || testCaseId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid test information.");
+        }
+        this.testCaseId = testCaseId;
 	}
 	
 	/**
@@ -60,8 +71,7 @@ public class TestCase {
 	 * @return the test case type
 	 */
 	public String getTestType() {
-		return null;
-		//
+		return testType;
 	}
 	
 	/**
@@ -71,7 +81,10 @@ public class TestCase {
 	 * @throws IllegalArgumentException if the type is null or empty
 	 */
 	private void setTestType(String testType) {
-		//
+		if (testType == null || testType.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid test information.");
+        }
+        this.testType = testType;
 	}
 	
 	/**
@@ -80,8 +93,7 @@ public class TestCase {
 	 * @return the test case description
 	 */
 	public String getTestDescription() {
-		return null;
-		//
+		return testDescription;
 	}
 	
 	/**
@@ -90,8 +102,11 @@ public class TestCase {
 	 * @param testDescription the test case description to set
 	 * @throws IllegalArgumentException if the description is null or empty
 	 */
-	private void setTestdescription(String testDescription) {
-		//
+	private void setTestDescription(String testDescription) {
+		if (testDescription == null || testDescription.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid test information.");
+        }
+        this.testDescription = testDescription;
 	}
 	
 	/**
@@ -101,8 +116,7 @@ public class TestCase {
 	 */
 
 	public String getExpectedResults() {
-		return null;
-		//
+		return expectedResults;
 	}
 	
 	/**
@@ -112,7 +126,10 @@ public class TestCase {
 	 * @throws IllegalArgumentException if the expected results are null or empty
 	 */
 	private void setExpectedResults(String expectedResults) {
-		//
+		if (expectedResults == null || expectedResults.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid test information.");
+        }
+        this.expectedResults = expectedResults;
 	}
 	
 	/**
@@ -123,7 +140,12 @@ public class TestCase {
 	 * @throws IllegalArgumentException if the TestResult cannot be constructed
 	 */
 	public void addTestResult(boolean passing, String actualResults) {
-		//
+		try {
+            TestResult result = new TestResult(passing, actualResults);
+            testResults.add(result);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid test information.");
+        }
 	}
 	
 	/**
@@ -133,8 +155,10 @@ public class TestCase {
 	 * @return true if the test case is passing, false otherwise
 	 */
 	public boolean isTestCasePassing() {
-		return false;
-		//
+		if (testResults.size() == 0) {
+	        return false;
+	    }
+	    return testResults.get(testResults.size() - 1).isPassing();
 	}
 	
 	/**
@@ -144,8 +168,10 @@ public class TestCase {
 	 * @return the status of the test case, as pass or fail
 	 */
 	public String getStatus() {
-		return null;
-		//
+		if (isTestCasePassing()) {
+            return TestResult.PASS;
+        }
+        return TestResult.FAIL;
 	}
 	
 	/**
@@ -155,8 +181,11 @@ public class TestCase {
 	 * @return a string representation of the actual results log
 	 */
 	public String getActualResultsLog() {
-		return null;
-		//
+		String log = "";
+        for (int i = 0; i < testResults.size(); i++) {
+            log += "- " + testResults.get(i).toString() + "\n";
+        }
+        return log;
 	}
 	
 	/**
@@ -166,7 +195,10 @@ public class TestCase {
 	 * @throws IllegalArgumentException if the provided test plan is null
 	 */
 	public void setTestPlan(TestPlan testPlan) {
-		//
+		if (testPlan == null) {
+            throw new IllegalArgumentException("Invalid test plan.");
+        }
+        this.testPlan = testPlan;
 	}
 	
 	/**
@@ -175,8 +207,7 @@ public class TestCase {
 	 * @return the test plan associated with this test case
 	 */
 	public TestPlan getTestPlan() {
-		return null;
-		//
+		return testPlan;
 	}
 	
 	/**
@@ -185,8 +216,11 @@ public class TestCase {
 	 * @return a string representation of the test case
 	 */
 	public String toString() {
-		return null;
-		//
+		String output = "TestCase " + testCaseId + ": " + testDescription + "\n";
+        output += "Type: " + testType + "\n";
+        output += "Expected Results: " + expectedResults + "\n";
+        output += "Actual Results:\n" + getActualResultsLog();
+        return output;
 	}
 	
 }
