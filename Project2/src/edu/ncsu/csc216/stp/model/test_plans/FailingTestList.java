@@ -28,7 +28,11 @@ public class FailingTestList extends AbstractTestPlan {
 	 */
 	@Override
 	public void addTestCase(TestCase t) {
-		
+		if (!t.isTestCasePassing()) {
+			super.addTestCase(t);
+		} else {
+			throw new IllegalArgumentException("Cannot add passing test case.");
+		}
 	}
 
 	/**
@@ -37,7 +41,10 @@ public class FailingTestList extends AbstractTestPlan {
 	 */
 	@Override
 	public void setTestPlanName(String testPlanName) {
-		//
+		if (!testPlanName.equalsIgnoreCase(FAILING_TEST_LIST_NAME)) {
+			throw new IllegalArgumentException("The Failing Tests list cannot be edited.");
+		}
+		super.setTestPlanName(testPlanName);
 	}
 	
 	/**
@@ -49,13 +56,23 @@ public class FailingTestList extends AbstractTestPlan {
 	 */
 	@Override
 	public String[][] getTestCasesAsArray() {
-		return null;
+		int size = getTestCases().size();
+		String[][] testCasesArray = new String[size][3];
+		for (int i = 0; i < size; i++) {
+			TestCase testCase = getTestCase(i);
+			testCasesArray[i][0] = testCase.getTestCaseId();
+			testCasesArray[i][1] = testCase.getTestType();
+			testCasesArray[i][2] = testCase.getTestPlan() != null ? testCase.getTestPlan().getTestPlanName() : "";
+		}
+		return testCasesArray;
 	}
 	
 	/**
 	 * Clears all tests from the FailingTestList.
 	 */
 	public void clearTests() {
-		//
+		while (getTestCases().size() > 0) {
+	        getTestCases().remove(0);
+		}
 	}
 }

@@ -2,15 +2,20 @@ package edu.ncsu.csc216.stp.model.test_plans;
 
 import edu.ncsu.csc216.stp.model.tests.TestCase;
 import edu.ncsu.csc216.stp.model.util.ISwapList;
+import edu.ncsu.csc216.stp.model.util.SwapList;
 
 /**
  * An abstract class at the top of the hierarchy for test plans.
  * The AbstractTestPlan knows the testPlanName and the ISwapList of TestCases.
+ * 
+ * @author Kaushya and Kavya
  */
 public class AbstractTestPlan {
 	
 	/** name of test plan*/
-	private static String testPlanName;
+	private String testPlanName;
+	/** List of test cases*/
+	private ISwapList<TestCase> testCases;
 	
 	/**
      * Constructs an AbstractTestPlan with the given test plan name.
@@ -19,7 +24,8 @@ public class AbstractTestPlan {
      * @throws IllegalArgumentException if the testPlanName is null or an empty string
      */
 	public AbstractTestPlan(String testPlanName) {
-		//
+		setTestPlanName(testPlanName);
+        testCases = new SwapList<TestCase>();
 	}
 	
 	/**
@@ -28,7 +34,10 @@ public class AbstractTestPlan {
      * @throws IllegalArgumentException if the testPlanName is null or an empty string
      */
 	public void setTestPlanName(String testPlanName) {
-		//
+		if (testPlanName == null || testPlanName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Invalid name.");
+        }
+        this.testPlanName = testPlanName.trim();
 	}
 	
 	/**
@@ -36,7 +45,7 @@ public class AbstractTestPlan {
      * @return the name of the test plan
      */
 	public String getTestPlanName() {
-		return null;
+		return testPlanName;
 	}
 	
 	/**
@@ -44,7 +53,7 @@ public class AbstractTestPlan {
 	 * @return list of TestCases
 	 */
 	public ISwapList<TestCase> getTestCases() {
-		return null;
+		return testCases;
 	}
 	
 	/**
@@ -52,7 +61,7 @@ public class AbstractTestPlan {
      * @param t the TestCase to add
      */
 	public void addTestCase(TestCase t) {
-		//
+		testCases.add(t);
 	}
 	
 	/**
@@ -61,7 +70,7 @@ public class AbstractTestPlan {
     * @return the removed TestCase
     */
 	public TestCase removeTestCase(int idx) {
-		return null;
+		return testCases.remove(idx);
 	}
 	
 	/**
@@ -70,7 +79,10 @@ public class AbstractTestPlan {
      * @return the TestCase at the given index
      */
 	public TestCase getTestCase(int idx) {
-		return null;
+		if (idx < 0 || idx >= testCases.size()) {
+	        throw new IndexOutOfBoundsException("Index out of bounds");
+	    }
+	    return testCases.get(idx);
 	}
 	
 	/**
@@ -78,7 +90,13 @@ public class AbstractTestPlan {
      * @return the number of failing TestCases
      */
 	public int getNumberOfFailingTests() {
-		return 0;
+		int count = 0;
+        for (int i = 0; i < testCases.size(); i++) {
+            if (!testCases.get(i).isTestCasePassing()) {
+                count++;
+            }
+        }
+        return count;
 	}
 	
 	/**
@@ -88,7 +106,7 @@ public class AbstractTestPlan {
      * @param actualResults the actual results of the test
      */
 	public void addTestResult(int idx, boolean passing, String actualResults) {
-		//
+		testCases.get(idx).addTestResult(passing, actualResults);
 	}
 	
 	/**
@@ -96,7 +114,14 @@ public class AbstractTestPlan {
      * @return a 2D String array representing the TestCases
      */
 	public String[][] getTestCasesAsArray() {
-		return null;
+		String[][] testCasesArray = new String[testCases.size()][4];
+	    for (int i = 0; i < testCases.size(); i++) {
+	        testCasesArray[i][0] = testCases.get(i).getTestCaseId();
+	        testCasesArray[i][1] = testCases.get(i).getTestType();
+	        testCasesArray[i][2] = testCases.get(i).getTestDescription();
+	        testCasesArray[i][3] = testCases.get(i).getExpectedResults();
+	    }
+	    return testCasesArray;
 	}
 	
 	/**
@@ -105,7 +130,7 @@ public class AbstractTestPlan {
      */
     @Override
     public int hashCode() {
-		return 0;
+    	return testPlanName.toLowerCase().hashCode();
 	}
 	
 	/**
@@ -115,6 +140,13 @@ public class AbstractTestPlan {
      */
     @Override
     public boolean equals(Object obj) {
-		return false;
+    	if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        AbstractTestPlan other = (AbstractTestPlan) obj;
+        return testPlanName.equalsIgnoreCase(other.testPlanName);
 	}
 }

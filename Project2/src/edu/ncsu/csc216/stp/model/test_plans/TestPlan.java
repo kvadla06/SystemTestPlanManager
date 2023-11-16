@@ -21,6 +21,10 @@ public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan> {
      */
 	public TestPlan(String testPlanName) {
 		super(testPlanName);
+		// FailingListTest or FailingTestList
+        if (testPlanName.equalsIgnoreCase(FailingTestList.FAILING_TEST_LIST_NAME)) {
+            throw new IllegalArgumentException("Invalid name.");
+        }
 	}
 	
 	/**
@@ -31,8 +35,15 @@ public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan> {
      * @return a 2D String array representing the TestCases
      */
 	public String[][] getTestCassesAsArray() {
-    	return null;
-		//
+		int size = getTestCases().size();
+        String[][] testCasesArray = new String[size][3];
+        for (int i = 0; i < size; i++) {
+            TestCase testCase = getTestCase(i);
+            testCasesArray[i][0] = testCase.getTestCaseId();
+            testCasesArray[i][1] = testCase.getTestType();
+            testCasesArray[i][2] = testCase.isTestCasePassing() ? "PASS" : "FAIL";
+        }
+        return testCasesArray;
 	}
 	
 	/** 
@@ -43,7 +54,8 @@ public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan> {
 	 */
 	@Override
 	public void addTestCase(TestCase t) {
-		//
+		super.addTestCase(t);
+        t.setTestPlan(this);
 	}
 	
 	/**
@@ -53,7 +65,7 @@ public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan> {
 	 * @return 0 integer
 	 */
 	public int compareTo(TestPlan t) {
-		return 0;
+		return this.getTestPlanName().compareToIgnoreCase(t.getTestPlanName());
 	}
 
 }
