@@ -19,19 +19,34 @@ public class Log<E> implements ILog<E> {
 	private static final int INIT_CAPACITY = 10;
 	
 	/** Constructor of Log object */
+	@SuppressWarnings("unchecked")
 	public Log() {
-		
+		log = (E[]) new Object[INIT_CAPACITY];
+		size = 0;
 	}
 	
 	/**
 	 * Adds element to log
 	 * @param element element to be added to log
 	 * @throws NullPointerException “Cannot add null element.” if the parameter is null.
+	 * 
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E element) {
-		// TODO Auto-generated method stub
+		if (element == null) {
+			throw new NullPointerException("Cannot add null element");
+		}
 		
+		if (size == INIT_CAPACITY) {
+			E[] log2 = (E[]) new Object[INIT_CAPACITY * 2];
+			for (int i = 0; i < log.length; i++) {
+				log2[i] = log[i];
+			}
+			this.log = log2;
+		}
+		log[size] = element;
+		size++;
 	}
 	
 	/**
@@ -42,8 +57,11 @@ public class Log<E> implements ILog<E> {
 	 */
 	@Override
 	public E get(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		if (idx < 0 || idx >= size()) {
+			throw new IndexOutOfBoundsException();
+		}
+		
+		return log[idx];
 	}
 
 	/**
@@ -52,7 +70,6 @@ public class Log<E> implements ILog<E> {
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
 		return size;
 	}
 
