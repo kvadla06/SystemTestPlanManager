@@ -51,7 +51,7 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 			add = true;
 		}
 		current = front;
-		if (front.next == null && add == false) {
+		if (front.next == null && !add) {
 			if (element.compareTo(front.data) > 0) {
 				front.next = new ListNode(element, null);
 				add = true;
@@ -62,15 +62,13 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 			
 		}
 		
-		if (!add) {
-			if (element.compareTo(front.data) < 0) {
-				var x = front;
-				front = new ListNode(element, x);
-				add = true;
-			}
+		if (!add && element.compareTo(front.data) < 0) {
+			var x = front;
+			front = new ListNode(element, x);
+			add = true;
 		}
 		current = front;
-		while(current.next != null && add == false) {
+		while(current.next != null && !add) {
 			if (element.compareTo(current.next.data) < 0) {
 				var x = current;
 				if (x != null) {
