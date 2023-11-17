@@ -32,7 +32,6 @@ public class SwapList<E> implements ISwapList<E> {
 	 * @throws NullPointerException “Cannot add null element.” if the parameter is null.
 	 * @throws IllegalArgumentException “Cannot add element”
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E element) {
 		if (element == null) {
