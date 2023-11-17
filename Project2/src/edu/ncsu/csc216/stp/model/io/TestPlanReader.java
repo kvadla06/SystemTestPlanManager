@@ -5,6 +5,7 @@ package edu.ncsu.csc216.stp.model.io;
 
 import java.io.File;
 import java.util.InputMismatchException;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -115,24 +116,28 @@ public class TestPlanReader {
 			newValue.close();
 		}
 		TestCase testCase = new TestCase(id, type, description, expected);
-		while (testCaseReader.hasNext()) {
-			String result = testCaseReader.next();
-			Scanner resultReader = new Scanner(result);
-			resultReader.useDelimiter(": ");
-			String bool = resultReader.next();
-			boolean testResult = false;
-			
-			switch (bool) {
-			case "PASS": 
-				testResult = true;
-				break;
-			case "FAIL":
-				testResult = false;
-				break;
+		try {
+			while (testCaseReader.hasNext()) {
+				String result = testCaseReader.next();
+				Scanner resultReader = new Scanner(result);
+				resultReader.useDelimiter(": ");
+				String bool = resultReader.next();
+				boolean testResult = false;
+				
+				switch (bool) {
+				case "PASS": 
+					testResult = true;
+					break;
+				case "FAIL":
+					testResult = false;
+					break;
+				}
+				String results = resultReader.next();
+				resultReader.close();
+				testCase.addTestResult(testResult, results);
+				
 			}
-			String results = resultReader.next();
-			resultReader.close();
-			testCase.addTestResult(testResult, results);
+		} catch (NoSuchElementException e) {
 			
 		}
 		testCaseReader.close();
