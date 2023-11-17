@@ -73,11 +73,7 @@ public class AbstractTestPlan {
     * @return the removed TestCase
     */
 	public TestCase removeTestCase(int idx) {
-		if (idx < 0 || idx >= getTestCases().size()) {
-	        throw new IndexOutOfBoundsException("Index out of bounds");
-	    }
-	    
-	    return getTestCases().remove(idx);
+		return testCases.remove(idx);
 	}
 	
 	/**
