@@ -4,7 +4,6 @@
 package edu.ncsu.csc216.stp.model.io;
 
 import java.io.File;
-import java.util.InputMismatchException;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.io.FileInputStream;
@@ -138,6 +137,8 @@ public class TestPlanReader {
 					break;
 				case "FAIL":
 					testResult = false;
+					break;
+				default:
 					break;
 				}
 				String results = resultReader.next();
