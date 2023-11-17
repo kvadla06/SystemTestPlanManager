@@ -36,14 +36,14 @@ class TestPlanTest {
 	 * Test method for testing to get test cases as a 2D array
 	 */
 	@Test
-	void testGetTestCassesAsArray() {
+	void testGetTestCasesAsArray() {
 	    TestPlan testPlan = new TestPlan("SampleTestPlan");
 	    TestCase testCase1 = new TestCase("ID1", "Type1", "Description1", "Expected1");
 	    TestCase testCase2 = new TestCase("ID2", "Type2", "Description2", "Expected2");
 	    testPlan.addTestCase(testCase1);
 	    testPlan.addTestCase(testCase2);
 
-	    String[][] testCasesArray = testPlan.getTestCassesAsArray();
+	    String[][] testCasesArray = testPlan.getTestCasesAsArray();
 	    assertEquals(2, testCasesArray.length, "Expected number of rows");
 
 	    assertEquals("ID1", testCasesArray[0][0], "TestCase ID at [0][0]");
