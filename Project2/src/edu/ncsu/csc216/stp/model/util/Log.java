@@ -35,7 +35,7 @@ public class Log<E> implements ILog<E> {
 	@Override
 	public void add(E element) {
 		if (element == null) {
-			throw new NullPointerException("Cannot add null element");
+			throw new NullPointerException("Cannot add null element.");
 		}
 		
 		if (size >= log.length) {
