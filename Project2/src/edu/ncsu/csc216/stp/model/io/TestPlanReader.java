@@ -99,7 +99,7 @@ public class TestPlanReader {
 			id = testCaseReaderValue.next();
 			type = testCaseReaderValue.next();
 			testCaseReaderValue.close();
-		} catch (InputMismatchException | IllegalArgumentException e) {
+		} catch (IllegalArgumentException | NoSuchElementException e) {
 			testCaseReader.close();
 			throw new IllegalArgumentException("Task cannot be added.");
 		}
