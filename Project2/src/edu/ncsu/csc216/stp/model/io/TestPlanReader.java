@@ -101,19 +101,22 @@ public class TestPlanReader {
 			testCaseReaderValue.close();
 		} catch (IllegalArgumentException | NoSuchElementException e) {
 			testCaseReader.close();
-			throw new IllegalArgumentException("Task cannot be added.");
 		}
 		if (!testCaseReader.hasNext()) {
 			testCaseReader.close();
 			throw new IllegalArgumentException();
 		} else {
 			testCaseReader.useDelimiter("\\r?\\n?[-] ");
-			String descExpect = testCaseReader.next();
-			Scanner newValue = new Scanner(descExpect);
-			newValue.useDelimiter("\\r?\\n?[*] ");
-			description = newValue.next();
-			expected = newValue.next();
-			newValue.close();
+			try {
+				String descExpect = testCaseReader.next();
+				Scanner newValue = new Scanner(descExpect);
+				newValue.useDelimiter("\\r?\\n?[*] ");
+				description = newValue.next();
+				expected = newValue.next();
+				newValue.close();
+			} catch (NoSuchElementException e) {
+				//
+			}
 		}
 		TestCase testCase = new TestCase(id, type, description, expected);
 		try {
@@ -138,7 +141,7 @@ public class TestPlanReader {
 				
 			}
 		} catch (NoSuchElementException e) {
-			
+			//
 		}
 		testCaseReader.close();
 		return testCase;
