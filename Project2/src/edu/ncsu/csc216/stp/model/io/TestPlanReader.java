@@ -72,8 +72,13 @@ public class TestPlanReader {
 		TestPlan testPlan = new TestPlan(testPlanName);
 		testReader.useDelimiter("\\r?\\n?[#] ");
 		while(testReader.hasNext()) {
-			String testCase = testReader.next();
-			processTest(testPlan, testCase);
+			try {
+				String testCase = testReader.next();
+				TestCase testCaseReturn = processTest(testPlan, testCase);
+				testPlan.addTestCase(testCaseReturn);
+			} catch (IllegalArgumentException e) {
+				//
+			}
 		}
 		testReader.close();
 		return testPlan;
@@ -118,8 +123,8 @@ public class TestPlanReader {
 			}
 			
 		}
-		TestCase testCase = new TestCase(id, type, description, expected);
 		try {
+			TestCase testCase = new TestCase(id, type, description, expected);
 			while (testCaseReader.hasNext()) {
 				String result = testCaseReader.next();
 				Scanner resultReader = new Scanner(result);
@@ -138,12 +143,12 @@ public class TestPlanReader {
 				String results = resultReader.next();
 				resultReader.close();
 				testCase.addTestResult(testResult, results);
-				
+				return testCase;				
 			}
-		} catch (NoSuchElementException e) {
+		} catch (IllegalArgumentException | NoSuchElementException e) {
 			//
 		}
 		testCaseReader.close();
-		return testCase;
+		return null;
 	}
 }
