@@ -16,6 +16,10 @@ import edu.ncsu.csc216.stp.model.test_plans.FailingTestList;
  *
  */
 class TestPlanManagerTest {
+	/**
+	 * TestPlanManagerTest class
+	 */
+	TestPlanManager manager;
 	
 	@BeforeEach
 	public void setUp() {
@@ -118,7 +122,7 @@ class TestPlanManagerTest {
 		manager.setCurrentTestPlan("Test Plan A");
 		manager.editTestPlan(newTestPlanName);
 		
-		assertTrue(arrayContainens(manager.getTestPlanNames(), newTestPlanName),
+		assertTrue(manager.arrayContains(manager.getTestPlanNames(), newTestPlanName),  
 				"Test plan should be renamed in the list");
 	}
 
@@ -129,7 +133,12 @@ class TestPlanManagerTest {
 	void testRemoveTestPlan() {
 		manager.addTestPlan("Test Plan A");
 		manager.setCurrentTestPlan("Test Plan A");
-		manger. 
+		manager.removeTestPlan();
+		
+		assertFalse(arrayContains(manager.getTestPlanNames(), "Test Plan A"),
+				"Test Plan should be removed from the list");
+		
+		assertNotNull(manager.getCurrentTestPlan());
 	}
 
 	/**

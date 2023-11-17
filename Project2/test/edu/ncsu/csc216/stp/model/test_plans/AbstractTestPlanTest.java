@@ -7,59 +7,71 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import edu.ncsu.csc216.stp.model.tests.TestCase;
+
 /**
  * This JUnit test class tests the methods of the AbstractTestPlan class
  * @author Kaushya and Kavya
  *
  */
 class AbstractTestPlanTest {
+	
+	private static final String FAILING_TEST_LIST_NAME = "Failing Tests";
+	/** String value for test result A*/
+	private static final String ACTUAL_RESULT = "The GUI failed to load";
+	/** String representing a passing test*/
+	public static final String PASS = "PASS";
+	/** String representing a failing test*/
+	public static final String FAIL = "FAIL";
+	/** String value for toString method*/
+	private static final String valueToString = "- " + FAIL +": " + ACTUAL_RESULT + "/n";
+	
+	/** test case ID for test case A*/
+	final static private String TESTCASE_ID = "1";
+	/** test case 1 test case type*/
+	final static String TEST_TYPE = "Boundary Value";
+	/** description for test case A*/
+	final static private String TEST_DESCRIPTION = "Preconditions: Test 4 has passed +/n Input -1 as a value";
+	/** expected result for test case A*/
+	final static private String EXPECTED_RESULT = "Invalid value";
+	
 
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#hashCode()}.
-	 */
-	@Test
-	void testHashCode() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#AbstractTestPlan(java.lang.String)}.
 	 */
 	@Test
 	void testAbstractTestPlan() {
-		fail("Not yet implemented");
+		Exception e1 = assertThrows(IllegalArgumentException.class, () -> new TestPlan(""),
+				"Should throw becuase of invalid actual results");
+		assertEquals(e1.getMessage(), "Invalid name.");
+		
+		Exception e2 = assertThrows(IllegalArgumentException.class, () -> new TestPlan(null),
+				"should throw exception because of invalid actual results");
+		assertEquals(e2.getMessage(), "Invalid name.");
+		
+		AbstractTestPlan ftl = new FailingTestList();
+		AbstractTestPlan tp = new TestPlan("Packscheduler");
+		assertEquals(FAILING_TEST_LIST_NAME, ftl.getTestPlanName());
+		assertEquals("WolfScheduler", tp.getTestPlanName());
 	}
 
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#setTestPlanName(java.lang.String)}.
-	 */
-	@Test
-	void testSetTestPlanName() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#getTestPlanName()}.
-	 */
-	@Test
-	void testGetTestPlanName() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#getTestCases()}.
-	 */
-	@Test
-	void testGetTestCases() {
-		fail("Not yet implemented");
-	}
-
+	
 	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#addTestCase(edu.ncsu.csc216.stp.model.tests.TestCase)}.
 	 */
 	@Test
 	void testAddTestCase() {
-		fail("Not yet implemented");
+		AbstractTestPlan tp = new TestPlan("Packscheduler");
+		TestCase tptc = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc2 = new TestCase("2", TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc3 = new TestCase(TESTCASE_ID, "Requirements", TEST_DESCRIPTION, EXPECTED_RESULT);
+
+		tp.addTestCase(tptc);
+		tp.addTestCase(tptc2);
+		tp.addTestCase(tptc3);
+		
+		assertEquals(tptc.toString(), tp.getTestCases().get(0).toString());
 	}
 
 	/**
@@ -67,47 +79,66 @@ class AbstractTestPlanTest {
 	 */
 	@Test
 	void testRemoveTestCase() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#getTestCase(int)}.
-	 */
-	@Test
-	void testGetTestCase() {
-		fail("Not yet implemented");
+		AbstractTestPlan tp = new TestPlan("Packscheduler");
+		TestCase tptc1 = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc2 = new TestCase("2", TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc3 = new TestCase(TESTCASE_ID, "Requirements", TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc4 = new TestCase(TESTCASE_ID, TEST_TYPE, "Preconditions: Test 2 passes", EXPECTED_RESULT);
+		TestCase tptc5 = new TestCase(TESTCASE_ID, "Requirements", TEST_DESCRIPTION, "Error Message");
+		
+		tp.addTestCase(tptc1);
+		tp.addTestCase(tptc2);
+		tp.addTestCase(tptc3);
+		tp.addTestCase(tptc4);
+		tp.addTestCase(tptc5);
+		
+		tp.removeTestCase(4);
+		assertEquals(tp.getTestCases().get(tp.getTestCases().size() -1).toString(),tptc4.toString());
+		
+		tp.removeTestCase(0);
+		assertEquals(tp.getTestCases().get(0).toString(), tptc2.toString());
+		
+		tp.removeTestCase(1);
+		assertEquals(tp.getTestCases().get(1).toString(), tptc4.toString());
+		
 	}
 
 	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#getNumberOfFailingTests()}.
 	 */
 	@Test
-	void testGetNumberOfFailingTests() {
-		fail("Not yet implemented");
-	}
+	void testGetNumberOfFailingTestCases() {
+		AbstractTestPlan tp = new TestPlan("Packscheduler");
+		TestCase tptc = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc2 = new TestCase("2", TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		TestCase tptc3 = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
+		
+		tp.addTestCase(tptc);
+		tp.addTestCase(tptc2);
+		tp.addTestCase(tptc3);
+		
+		tptc.addTestResult(false, ACTUAL_RESULT);
+		tptc2.addTestResult(true, ACTUAL_RESULT);
+		tptc3.addTestResult(true, ACTUAL_RESULT);
+		assertEquals(tp.getNumberOfFailingTests(), 1);
+		tptc2.addTestResult(false, ACTUAL_RESULT);
+		assertEquals(tp.getNumberOfFailingTests(), 2);
+		tptc3.addTestResult(true, ACTUAL_RESULT);
+		assertEquals(tp.getNumberOfFailingTests(), 2);
+	} 
 
 	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#addTestResult(int, boolean, java.lang.String)}.
 	 */
 	@Test
 	void testAddTestResult() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#getTestCasesAsArray()}.
-	 */
-	@Test
-	void testGetTestCasesAsArray() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan#equals(java.lang.Object)}.
-	 */
-	@Test
-	void testEqualsObject() {
-		fail("Not yet implemented");
+		AbstractTestPlan tp = new TestPlan("PackScheduler");
+		TestCase tptc = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION,EXPECTED_RESULT);
+		
+		tp.addTestCase(tptc);
+		tp.addTestResult(0, false, ACTUAL_RESULT);
+		
+		assertEquals(valueToString, tp.getTestCases().get(0).getActualResultsLog());
 	}
 
 }
