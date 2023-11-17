@@ -80,24 +80,21 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 * or a duplicate of an existing TestPlan 
 	 */
 	public void addTestPlan(String testPlanName) {
-		if (testPlanName == null || testPlanName.trim().isEmpty()) {
+		if (testPlanName.equalsIgnoreCase(FailingTestList.FAILING_TEST_LIST_NAME)) {
 	        throw new IllegalArgumentException("Invalid name.");
 	    }
-	    
-	    if (testPlanName.equalsIgnoreCase(FailingTestList.FAILING_TEST_LIST_NAME)) {
-	        throw new IllegalArgumentException("Invalid name.");
-	    }
-	    
 	    for (int i = 0; i < testPlans.size(); i++) {
 	        TestPlan plan = testPlans.get(i);
-	        if (plan.getTestPlanName().equalsIgnoreCase(testPlanName)) {
+	        String currentPlanName = plan.getTestPlanName();
+	        if (currentPlanName.equalsIgnoreCase(testPlanName)) {
 	            throw new IllegalArgumentException("Invalid name.");
 	        }
 	    }
-	    
 	    TestPlan newerTestPlan = new TestPlan(testPlanName);
 	    testPlans.add(newerTestPlan);
+	    
 	    setCurrentTestPlan(newerTestPlan.getTestPlanName());
+	    
 	    isChanged = true;
 	}
 	
