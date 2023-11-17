@@ -16,6 +16,7 @@ import edu.ncsu.csc216.stp.model.tests.TestCase;
  */
 class AbstractTestPlanTest {
 	
+	/** string name for failing tests */
 	private static final String FAILING_TEST_LIST_NAME = "Failing Tests";
 	/** String value for test result A*/
 	private static final String ACTUAL_RESULT = "The GUI failed to load";
@@ -24,7 +25,7 @@ class AbstractTestPlanTest {
 	/** String representing a failing test*/
 	public static final String FAIL = "FAIL";
 	/** String value for toString method*/
-	private static final String valueToString = "- " + FAIL +": " + ACTUAL_RESULT +"\n";
+	private static final String VALUE_TO_STRING = "- " + FAIL + ": " + ACTUAL_RESULT + "\n";
 	
 	/** test case ID for test case A*/
 	final static private String TESTCASE_ID = "1";
@@ -94,7 +95,7 @@ class AbstractTestPlanTest {
 		tp.addTestCase(tptc5);
 		
 		tp.removeTestCase(4);
-		assertEquals(tp.getTestCases().get(tp.getTestCases().size() -1).toString(),tptc4.toString());
+		assertEquals(tp.getTestCases().get(tp.getTestCases().size() - 1).toString(), tptc4.toString());
 		
 		tp.removeTestCase(0);
 		assertEquals(tp.getTestCases().get(0).toString(), tptc2.toString());
@@ -134,12 +135,12 @@ class AbstractTestPlanTest {
 	@Test
 	void testAddTestResult() {
 		AbstractTestPlan tp = new TestPlan("PackScheduler");
-		TestCase tptc = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION,EXPECTED_RESULT);
+		TestCase tptc = new TestCase(TESTCASE_ID, TEST_TYPE, TEST_DESCRIPTION, EXPECTED_RESULT);
 		
 		tp.addTestCase(tptc);
 		tp.addTestResult(0, false, ACTUAL_RESULT);
 		
-		assertEquals(valueToString, tp.getTestCases().get(0).getActualResultsLog());
+		assertEquals(VALUE_TO_STRING, tp.getTestCases().get(0).getActualResultsLog());
 	}
 	
 	@Test

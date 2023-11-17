@@ -4,9 +4,6 @@
 package edu.ncsu.csc216.stp.model.manager;
 
 import java.io.File;
-import java.util.Iterator;
-import java.util.List;
-
 import edu.ncsu.csc216.stp.model.io.TestPlanReader;
 import edu.ncsu.csc216.stp.model.io.TestPlanWriter;
 import edu.ncsu.csc216.stp.model.test_plans.AbstractTestPlan;
@@ -110,7 +107,7 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 * @return list of names of test plans
 	 */
 	public String[] getTestPlanNames() {
-		String [] names = new String[testPlans.size() +1];
+		String [] names = new String[testPlans.size() + 1];
 		names[0] = FailingTestList.FAILING_TEST_LIST_NAME;
 		for(int i = 0; i < testPlans.size(); i++) { 
 			TestPlan tp = testPlans.get(i);
@@ -188,7 +185,7 @@ public class TestPlanManager<E extends Comparable<E>> {
 	       }
 	       
 	       int editIndex = -1;
-	       for (int i = 0; i <testPlans.size(); i++) {  
+	       for (int i = 0; i < testPlans.size(); i++) {  
 	    	   if (testPlans.get(i).getTestPlanName().equalsIgnoreCase(testPlanName)) {
 	    		   throw new IllegalArgumentException("Invalid name.");
 	    	   }

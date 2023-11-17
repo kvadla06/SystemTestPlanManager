@@ -55,7 +55,7 @@ class TestPlanManagerTest {
         String[] testPlanNames = manager.getTestPlanNames();
         boolean found = false;
         for (String name : testPlanNames) {
-            if (name.equals("New Test Plan")) {
+            if ("New Test Plan".equals(name)) {
                 found = true;
                 break;
             }
