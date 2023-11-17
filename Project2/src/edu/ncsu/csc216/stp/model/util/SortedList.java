@@ -40,7 +40,7 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 		ListNode current = front;
 		while (current != null) {
 			if (element.compareTo(current.data) == 0) {
-				throw new IllegalArgumentException("Cannot add duplicate element");
+				throw new IllegalArgumentException("Cannot add duplicate element.");
 			}
 			current = current.next;
 		}
