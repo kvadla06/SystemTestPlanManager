@@ -48,19 +48,13 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 */
 	public void loadTestPlans(File testPlanFile) {
 		ISortedList<TestPlan> loadedTestPlans = TestPlanReader.readTestPlansFile(testPlanFile);
-	    int size = loadedTestPlans.size();
-
-	    TestPlan[] plansArray = new TestPlan[size];
-	    for (int i = 0; i < size; i++) {
-	        plansArray[i] = loadedTestPlans.get(i);
-	    }
-
-	    for (int i = 0; i < plansArray.length; i++) {
-	        TestPlan plan = plansArray[i];
+	    for (int i = 0; i < loadedTestPlans.size(); i++) {
+	        TestPlan plan = loadedTestPlans.get(i);
 	        if (!testPlans.contains(plan)) {
 	            testPlans.add(plan);
 	        }
 	    }
+	    getFailingTests();
 
 	    setCurrentTestPlan(FailingTestList.FAILING_TEST_LIST_NAME);
 	    isChanged = true;
