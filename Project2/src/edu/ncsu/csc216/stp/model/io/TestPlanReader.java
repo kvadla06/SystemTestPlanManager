@@ -98,7 +98,6 @@ public class TestPlanReader {
 		try {
 			id = testCaseReaderValue.next();
 			type = testCaseReaderValue.next();
-			testCaseReaderValue.close();
 		} catch (IllegalArgumentException | NoSuchElementException e) {
 			testCaseReader.close();
 		}
@@ -117,6 +116,7 @@ public class TestPlanReader {
 			} catch (NoSuchElementException e) {
 				//
 			}
+			
 		}
 		TestCase testCase = new TestCase(id, type, description, expected);
 		try {
