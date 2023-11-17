@@ -6,6 +6,7 @@ package edu.ncsu.csc216.stp.model.tests;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+import edu.ncsu.csc216.stp.model.test_plans.TestPlan;
 
 /**
  * This JUnit test class tests the methods of the TestCaseTest class
@@ -14,28 +15,23 @@ import org.junit.jupiter.api.Test;
  */
 class TestCaseTest {
 
-	/**
-	 * Test method for testing the testCase
-	 */
-	@Test
-	void testTestCase() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for getting the test case Id
 	 */
 	@Test
-	void testGetTestCaseId() {
-		fail("Not yet implemented");
-	}
+    void testGetTestCaseId() {
+        TestCase testCase = new TestCase("ID001", "Type", "Description", "Expected");
+        assertEquals("ID001", testCase.getTestCaseId(), "Initial test case ID");
+    }
 
 	/**
 	 * Test method for getting test type
 	 */
 	@Test
 	void testGetTestType() {
-		fail("Not yet implemented");
+        TestCase testCase = new TestCase("ID001", "TypeABC", "DescriptionXYZ", "Expected");
+        assertEquals("TypeABC", testCase.getTestType(), "Test case type");
 	}
 
 	/**
@@ -43,7 +39,8 @@ class TestCaseTest {
 	 */
 	@Test
 	void testGetTestDescription() {
-		fail("Not yet implemented");
+		TestCase testCase = new TestCase("ID001", "TypeABC", "DescriptionXYZ", "Expected");
+        assertEquals("DescriptionXYZ", testCase.getTestDescription(), "Test case description");
 	}
 
 	/**
@@ -51,7 +48,8 @@ class TestCaseTest {
 	 */
 	@Test
 	void testGetExpectedResults() {
-		fail("Not yet implemented");
+        TestCase testCase = new TestCase("ID001", "TypeABC", "DescriptionXYZ", "Expected");
+        assertEquals("Expected", testCase.getExpectedResults(), "Expected results of the test case");
 	}
 
 	/**
@@ -59,55 +57,40 @@ class TestCaseTest {
 	 */
 	@Test
 	void testAddTestResult() {
-		fail("Not yet implemented");
+        TestCase testCase = new TestCase("ID001", "TypeABC", "DescriptionXYZ", "Expected");
+        testCase.addTestResult(true, "Actual");
+        assertEquals("PASS", testCase.getStatus(), "Status of the test case after adding result");
+        testCase.addTestResult(false, "Failure");
+        assertEquals("FAIL", testCase.getStatus(), "Status of the test case after adding failure");
 	}
 
-	/**
-	 * Test method for checking whether the test case is passing
-	 */
-	@Test
-	void testIsTestCasePassing() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for getting the pass or fail status
 	 */
 	@Test
 	void testGetStatus() {
-		fail("Not yet implemented");
+        TestCase testCase = new TestCase("ID001", "TypeABC", "DescriptionXYZ", "Expected");
+        testCase.addTestResult(true, "Actual Pass");
+        
+        assertEquals("PASS", testCase.getStatus(), "Status should be PASS for a passing test case");
+        testCase.addTestResult(false, "Actual Fail");
+        assertEquals("FAIL", testCase.getStatus(), "Status should be FAIL for a failing test case");
 	}
 
-	/**
-	 * Test method for getting the actual results
-	 */
-	@Test
-	void testGetActualResultsLog() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for setting the test plan
-	 */
-	@Test
-	void testSetTestPlan() {
-		fail("Not yet implemented");
-	}
 
 	/**
 	 * Test method for getting test plan
 	 */
 	@Test
 	void testGetTestPlan() {
-		fail("Not yet implemented");
-	}
+		TestCase testCaseWithoutPlan = new TestCase("ID001", "TypeABC", "DescriptionXYZ", "Expected");
+		
+        assertNull(testCaseWithoutPlan.getTestPlan(), "Test plan should be null initially");
+        TestPlan testPlan = new TestPlan("TestPlan1");
 
-	/**
-	 * Test method for converting test to string format
-	 */
-	@Test
-	void testToString() {
-		fail("Not yet implemented");
+        testCaseWithoutPlan.setTestPlan(testPlan);
+        assertEquals(testPlan, testCaseWithoutPlan.getTestPlan(), "Test plan should match the one set");
 	}
 
 }

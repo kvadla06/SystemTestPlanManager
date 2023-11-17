@@ -23,7 +23,7 @@ public class TestCase {
 	private String expectedResults;
 	/** The associated test plan */
 	private TestPlan testPlan;
-	/** Log to store Testresult objects */
+	/** Log to store Test result objects */
 	private Log<TestResult> testResults;
 	
 	/**

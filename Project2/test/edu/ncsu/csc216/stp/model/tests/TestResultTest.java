@@ -19,7 +19,18 @@ class TestResultTest {
 	 */
 	@Test
 	void testTestResult() {
-		fail("Not yet implemented");
+		TestResult passingResult = new TestResult(true, "Test passed");
+        assertEquals("PASS: Test passed", passingResult.toString(), "Passing result should match");
+
+        TestResult failingResult = new TestResult(false, "Test failed");
+        assertEquals("FAIL: Test failed", failingResult.toString(), "Failing result should match");
+
+        //null or empty actualResults
+        assertThrows(IllegalArgumentException.class, () -> new TestResult(true, null),
+                "Null actualResults should throw IllegalArgumentException");
+        
+        assertThrows(IllegalArgumentException.class, () -> new TestResult(false, ""),
+                "Empty actualResults should throw IllegalArgumentException");
 	}
 
 	/**
@@ -27,23 +38,25 @@ class TestResultTest {
 	 */
 	@Test
 	void testGetActualResults() {
-		fail("Not yet implemented");
+		String expectedResult = "Expected result";
+        TestResult result = new TestResult(true, expectedResult);
+        assertEquals(expectedResult, result.getActualResults(), "Actual result should match the expected result");
+        
+        String differentResult = "Different result";
+        TestResult different = new TestResult(false, differentResult);
+        assertEquals(differentResult, different.getActualResults(), "Different actual result should be retrieved correctly");
 	}
-
+	
 	/**
 	 * Test method for if test is passing
 	 */
 	@Test
 	void testIsPassing() {
-		fail("Not yet implemented");
-	}
+		TestResult passingResult = new TestResult(true, "Test passed");
+        assertTrue(passingResult.isPassing(), "Passing result should return true for isPassing");
 
-	/**
-	 * Test method for converting to the string format 
-	 */
-	@Test
-	void testToString() {
-		fail("Not yet implemented");
+        TestResult failingResult = new TestResult(false, "Test failed");
+        assertFalse(failingResult.isPassing(), "Failing result should return false for isPassing");
 	}
 
 }
