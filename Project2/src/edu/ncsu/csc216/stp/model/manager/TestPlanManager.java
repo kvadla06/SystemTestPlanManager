@@ -4,6 +4,8 @@
 package edu.ncsu.csc216.stp.model.manager;
 
 import java.io.File;
+import java.util.List;
+import java.util.ArrayList;
 
 import edu.ncsu.csc216.stp.model.io.TestPlanReader;
 import edu.ncsu.csc216.stp.model.io.TestPlanWriter;
@@ -46,14 +48,20 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 */
 	public void loadTestPlans(File testPlanFile) {
 		ISortedList<TestPlan> loadedTestPlans = TestPlanReader.readTestPlansFile(testPlanFile);
-		for (int i = 0; i < loadedTestPlans.size(); i++) {
-			TestPlan plan = loadedTestPlans.get(i);
-			if (!testPlans.contains(plan)) {
-				testPlans.add(plan);
-			}
-		}
-		setCurrentTestPlan(FailingTestList.FAILING_TEST_LIST_NAME);
-		isChanged = true;
+	    
+	    List<TestPlan> loadedList = new ArrayList<>();
+	    for (int i = 0; i < loadedTestPlans.size(); i++) {
+	        loadedList.add(loadedTestPlans.get(i));
+	    }
+	    
+	    for (TestPlan plan : loadedList) {
+	        if (!testPlans.contains(plan)) {
+	            testPlans.add(plan);
+	        }
+	    }
+	    
+	    setCurrentTestPlan(FailingTestList.FAILING_TEST_LIST_NAME);
+	    isChanged = true;
 	}
 	
 	/**
@@ -80,21 +88,24 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 * or a duplicate of an existing TestPlan 
 	 */
 	public void addTestPlan(String testPlanName) {
-		if (testPlanName.equalsIgnoreCase(FailingTestList.FAILING_TEST_LIST_NAME)) {
+		if (testPlanName == null || testPlanName.trim().isEmpty()) {
 	        throw new IllegalArgumentException("Invalid name.");
 	    }
+	    
+	    if (testPlanName.equalsIgnoreCase(FailingTestList.FAILING_TEST_LIST_NAME)) {
+	        throw new IllegalArgumentException("Invalid name.");
+	    }
+	    
 	    for (int i = 0; i < testPlans.size(); i++) {
 	        TestPlan plan = testPlans.get(i);
-	        String currentPlanName = plan.getTestPlanName();
-	        if (currentPlanName.equalsIgnoreCase(testPlanName)) {
+	        if (plan.getTestPlanName().equalsIgnoreCase(testPlanName)) {
 	            throw new IllegalArgumentException("Invalid name.");
 	        }
 	    }
+	    
 	    TestPlan newerTestPlan = new TestPlan(testPlanName);
 	    testPlans.add(newerTestPlan);
-	    
 	    setCurrentTestPlan(newerTestPlan.getTestPlanName());
-	    
 	    isChanged = true;
 	}
 	
@@ -105,9 +116,9 @@ public class TestPlanManager<E extends Comparable<E>> {
 	public String[] getTestPlanNames() {
 		String [] names = new String[testPlans.size() +1];
 		names[0] = FailingTestList.FAILING_TEST_LIST_NAME;
-		for(int i = 0; i < testPlans.size(); i++) {
+		for(int i = 0; i < testPlans.size(); i++) { 
 			TestPlan tp = testPlans.get(i);
-			names[i +1] = tp.getTestPlanName();
+			names[i + 1] = tp.getTestPlanName();
 		}
 		return names;
 	}
