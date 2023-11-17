@@ -24,7 +24,7 @@ class AbstractTestPlanTest {
 	/** String representing a failing test*/
 	public static final String FAIL = "FAIL";
 	/** String value for toString method*/
-	private static final String valueToString = "- " + FAIL +": " + ACTUAL_RESULT + "/n";
+	private static final String valueToString = "- " + FAIL +": " + ACTUAL_RESULT +"\n";
 	
 	/** test case ID for test case A*/
 	final static private String TESTCASE_ID = "1";
@@ -53,7 +53,7 @@ class AbstractTestPlanTest {
 		AbstractTestPlan ftl = new FailingTestList();
 		AbstractTestPlan tp = new TestPlan("Packscheduler");
 		assertEquals(FAILING_TEST_LIST_NAME, ftl.getTestPlanName());
-		assertEquals("WolfScheduler", tp.getTestPlanName());
+		assertEquals("Packscheduler", tp.getTestPlanName());
 	}
 
 	
@@ -71,7 +71,8 @@ class AbstractTestPlanTest {
 		tp.addTestCase(tptc2);
 		tp.addTestCase(tptc3);
 		
-		assertEquals(tptc.toString(), tp.getTestCases().get(0).toString());
+		assertEquals(tptc.toString(), tp.getTestCase(0).toString(),
+				"Index out of bounds");
 	}
 
 	/**
@@ -140,5 +141,25 @@ class AbstractTestPlanTest {
 		
 		assertEquals(valueToString, tp.getTestCases().get(0).getActualResultsLog());
 	}
+	
+	@Test
+	void testErrorHandling() {
+	    AbstractTestPlan tp = new TestPlan("Packscheduler");
+	    
+	    assertThrows(IllegalArgumentException.class, () -> tp.addTestCase(null));
+	    assertThrows(IndexOutOfBoundsException.class, () -> tp.removeTestCase(0));
+	    
+	    assertThrows(IllegalArgumentException.class, () -> tp.setTestPlanName(null));
+	    assertThrows(IllegalArgumentException.class, () -> tp.setTestPlanName(""));
+	} 
 
+	@Test
+	void testHashCode() {
+	    AbstractTestPlan plan1 = new TestPlan("Plan1");
+	    AbstractTestPlan plan2 = new TestPlan("Plan1");
+	    AbstractTestPlan plan3 = new TestPlan("Plan3");
+
+	    assertEquals(plan1.hashCode(), plan2.hashCode());
+	    assertNotEquals(plan1.hashCode(), plan3.hashCode());
+	}
 }

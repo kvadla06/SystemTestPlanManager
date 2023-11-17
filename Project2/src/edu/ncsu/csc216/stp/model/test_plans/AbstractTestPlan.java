@@ -61,6 +61,9 @@ public class AbstractTestPlan {
      * @param t the TestCase to add
      */
 	public void addTestCase(TestCase t) {
+		if (t == null) {
+	        throw new IllegalArgumentException("Cannot add passing test case.");
+	    }
 		testCases.add(t);
 	}
 	
