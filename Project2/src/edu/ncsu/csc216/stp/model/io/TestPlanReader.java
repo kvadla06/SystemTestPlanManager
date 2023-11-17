@@ -22,11 +22,6 @@ import edu.ncsu.csc216.stp.model.util.SortedList;
  */
 public class TestPlanReader {
 	
-	/** 
-	 * TestPlanReader object constructor
-	 */
-	public TestPlanReader() {	
-	}
 	
 	/**
 	 * This method receives a File with the file to read from
@@ -39,7 +34,7 @@ public class TestPlanReader {
 		String fileName = "";
 		try {
 			Scanner fileReader = new Scanner(new FileInputStream(file)); 
-			String line1 = fileReader.next();
+			String line1 = fileReader.nextLine();
 			if (line1.charAt(0) != '!') {
 				throw new IllegalArgumentException("Unable to load file.");
 			} else {
@@ -50,7 +45,7 @@ public class TestPlanReader {
 		    }    
 	    } catch (FileNotFoundException e) {
 	    	throw new IllegalArgumentException("Unable to load file.");
-	    }   
+	    }   	
 		Scanner testPlanReader = new Scanner(fileName);
 		testPlanReader.useDelimiter("\\r?\\n?[!] ");
 		ISortedList<TestPlan> testPlans = new SortedList<TestPlan>(); 
@@ -114,35 +109,31 @@ public class TestPlanReader {
 			testCaseReader.useDelimiter("\\r?\\n?[-] ");
 			String descExpect = testCaseReader.next();
 			Scanner newValue = new Scanner(descExpect);
-			newValue.useDelimiter("\\r?\\n?[*]");
+			newValue.useDelimiter("\\r?\\n?[*] ");
 			description = newValue.next();
 			expected = newValue.next();
 			newValue.close();
 		}
 		TestCase testCase = new TestCase(id, type, description, expected);
-		if (!testCaseReader.hasNext()) {
-			testCaseReader.close();
-			throw new IllegalArgumentException();
-		} else {
-			while (testCaseReader.hasNext()) {
-				String result = testCaseReader.next();
-				Scanner resultReader = new Scanner(result);
-				resultReader.useDelimiter(":");
-				String bool = resultReader.next();
-				boolean testResult = false;
-				
-				switch (bool) {
-				case "PASS": 
-					testResult = true;
-					break;
-				case "FAIL":
-					testResult = false;
-					break;
-				}
-				String results = resultReader.next();
-				resultReader.close();
-				testCase.addTestResult(testResult, results);
+		while (testCaseReader.hasNext()) {
+			String result = testCaseReader.next();
+			Scanner resultReader = new Scanner(result);
+			resultReader.useDelimiter(": ");
+			String bool = resultReader.next();
+			boolean testResult = false;
+			
+			switch (bool) {
+			case "PASS": 
+				testResult = true;
+				break;
+			case "FAIL":
+				testResult = false;
+				break;
 			}
+			String results = resultReader.next();
+			resultReader.close();
+			testCase.addTestResult(testResult, results);
+			
 		}
 		testCaseReader.close();
 		return testCase;
