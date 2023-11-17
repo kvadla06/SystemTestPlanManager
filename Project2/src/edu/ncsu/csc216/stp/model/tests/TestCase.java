@@ -82,7 +82,7 @@ public class TestCase {
 	 */
 	private void setTestType(String testType) {
 		if (testType == null || testType.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid test results.");
+            throw new IllegalArgumentException("Invalid test information.");
         }
         this.testType = testType;
 	}
