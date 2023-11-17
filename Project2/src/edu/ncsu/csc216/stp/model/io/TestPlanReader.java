@@ -99,7 +99,7 @@ public class TestPlanReader {
 			id = testCaseReaderValue.next();
 			type = testCaseReaderValue.next();
 		} catch (IllegalArgumentException | NoSuchElementException e) {
-			testCaseReader.close();
+			testCaseReaderValue.close();
 		}
 		if (!testCaseReader.hasNext()) {
 			testCaseReader.close();
