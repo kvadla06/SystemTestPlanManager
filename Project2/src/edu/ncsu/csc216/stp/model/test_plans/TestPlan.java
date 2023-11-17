@@ -34,14 +34,14 @@ public class TestPlan extends AbstractTestPlan implements Comparable<TestPlan> {
      * 
      * @return a 2D String array representing the TestCases
      */
-	public String[][] getTestCassesAsArray() {
+	public String[][] getTestCasesAsArray() {
 		int size = getTestCases().size();
         String[][] testCasesArray = new String[size][3];
         for (int i = 0; i < size; i++) {
             TestCase testCase = getTestCase(i);
             testCasesArray[i][0] = testCase.getTestCaseId();
             testCasesArray[i][1] = testCase.getTestType();
-            testCasesArray[i][2] = testCase.isTestCasePassing() ? "PASS" : "FAIL";
+            testCasesArray[i][2] = testCase.getStatus();
         }
         return testCasesArray;
 	}
