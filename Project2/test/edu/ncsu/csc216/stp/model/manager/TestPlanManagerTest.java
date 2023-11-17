@@ -5,10 +5,14 @@ package edu.ncsu.csc216.stp.model.manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.File;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import edu.ncsu.csc216.stp.model.tests.TestCase;
 
 import edu.ncsu.csc216.stp.model.test_plans.FailingTestList;
+import edu.ncsu.csc216.stp.model.test_plans.TestPlan;
 
 /**
  * This JUnit test class tests the methods of the TestPlanManager class
@@ -19,19 +23,11 @@ class TestPlanManagerTest {
 	/**
 	 * TestPlanManagerTest class
 	 */
-	TestPlanManager manager;
+	TestPlanManager<TestPlan> manager;
 	
 	@BeforeEach
 	public void setUp() {
-		manager = new TestPlanManager();
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#TestPlanManager()}.
-	 */
-	@Test
-	void testTestPlanManager() {
-		fail("Not yet implemented");
+		manager = new TestPlanManager<TestPlan>();
 	}
 
 	/**
@@ -40,16 +36,7 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testLoadTestPlans() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#saveTestPlans(java.io.File)}.
-	 * Tests whether the test plans are saved
-	 */
-	@Test
-	void testSaveTestPlans() {
-		fail("Not yet implemented");
+		
 	}
 
 	/**
@@ -58,7 +45,13 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testIsChanged() {
-		fail("Not yet implemented");
+		TestPlanManager manager = new TestPlanManager();
+        assertFalse(manager.isChanged(), "Manager indicates changes when it should not");
+
+        manager.addTestPlan("Plan1");
+        assertTrue(manager.isChanged(), "Manager should indicate changes");
+        manager.saveTestPlans(new File("filename"));
+        assertFalse(manager.isChanged(), "Manager indicates changes when it should not after saving");
 	}
 
 	/**
@@ -67,10 +60,17 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testAddTestPlan() {
-		String testPlanName = "Test Plan Name 1";
-		manager.addTestPlan(testPlanName);
-		assertTrue(arrayContains(manager.getTestPlanNames(), testPlanName),
-				"Test plan should be added to the list");
+        manager.addTestPlan("New Test Plan");
+        
+        String[] testPlanNames = manager.getTestPlanNames();
+        boolean found = false;
+        for (String name : testPlanNames) {
+            if (name.equals("New Test Plan")) {
+                found = true;
+                break;
+            }
+        }
+        assertTrue(found, "Test plan was not added");
 	}
 
 	/**
@@ -90,16 +90,16 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testGetTestPlanNames() {
-		fail("Not yet implemented");
-	}
+        manager.addTestPlan("Plan A");
+        manager.addTestPlan("Plan B");
 
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#setCurrentTestPlan(java.lang.String)}.
-	 * tests to set current test plan
-	 */
-	@Test
-	void testSetCurrentTestPlan() {
-		fail("Not yet implemented");
+
+        String[] testPlanNames = manager.getTestPlanNames();
+
+        assertEquals(3, testPlanNames.length, "Wrong number of test plan names");
+        assertEquals("Failing Tests", testPlanNames[0], "First test plan name is wrong");
+        assertEquals("Plan A", testPlanNames[1], "Second test plan name is wrong");
+        assertEquals("Plan B", testPlanNames[2], "Third test plan name is wrong");
 	}
 
 	/**
@@ -108,7 +108,14 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testGetCurrentTestPlan() {
-		fail("Not yet implemented");
+        assertEquals("Failing Tests", manager.getCurrentTestPlan().getTestPlanName(), 
+                     "At first, the current test plan should be the failing test list");
+        
+        manager.addTestPlan("New Test Plan");
+        manager.setCurrentTestPlan("New Test Plan");
+
+        assertEquals("New Test Plan", manager.getCurrentTestPlan().getTestPlanName(), 
+                     "Current test plan should match the new test plan");
 	}
 
 	/**
@@ -116,14 +123,12 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testEditTestPlan() {
-		manager.addTestPlan("Test Plan A");
-		String newTestPlanName = "Edited Test Plan";
-		
-		manager.setCurrentTestPlan("Test Plan A");
-		manager.editTestPlan(newTestPlanName);
-		
-		assertTrue(manager.arrayContains(manager.getTestPlanNames(), newTestPlanName),  
-				"Test plan should be renamed in the list");
+        manager.addTestPlan("Plan1");
+        manager.setCurrentTestPlan("Plan1");
+        manager.editTestPlan("EditedPlan");
+
+        assertEquals("EditedPlan", manager.getCurrentTestPlan().getTestPlanName(), 
+                     "Test plan should be successfully edited");
 	}
 
 	/**
@@ -131,22 +136,28 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testRemoveTestPlan() {
-		manager.addTestPlan("Test Plan A");
-		manager.setCurrentTestPlan("Test Plan A");
-		manager.removeTestPlan();
-		
-		assertFalse(arrayContains(manager.getTestPlanNames(), "Test Plan A"),
-				"Test Plan should be removed from the list");
-		
-		assertNotNull(manager.getCurrentTestPlan());
+		 manager.addTestPlan("PlanA");
+	        manager.setCurrentTestPlan("PlanA");
+	        manager.removeTestPlan();
+
+	        assertEquals("Failing Tests", manager.getCurrentTestPlan().getTestPlanName(), 
+	                     "Test plan should be successfully removed");
 	}
 
 	/**
-	 * Test method for adding a test case
+	 * Test method for adding a test case 
 	 */
 	@Test
 	void testAddTestCase() {
-		fail("Not yet implemented");
+        manager.addTestPlan("Plan1");
+        manager.setCurrentTestPlan("Plan1");
+        
+        TestCase testCase = new TestCase("1", "Type", "Description", "Expected");
+        testCase.addTestResult(false, "Actual");
+        manager.addTestCase(testCase);
+    
+        assertEquals(1, manager.getCurrentTestPlan().getTestCases().size(), 
+                     "Test case should be successfully added");
 	}
 
 	/**
@@ -154,7 +165,16 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testAddTestResult() {
-		fail("Not yet implemented");
+		manager.addTestPlan("Plan1");
+        manager.setCurrentTestPlan("Plan1");
+
+        TestCase testCase = new TestCase("1", "Type", "Description", "Expected");
+        testCase.addTestResult(false, "Actual");
+        manager.addTestCase(testCase);
+        
+        manager.addTestResult(0, true, "New actual result");
+        assertTrue(manager.getCurrentTestPlan().getTestCases().get(0).isTestCasePassing(),
+                   "Test result should be successfully added");
 	}
 
 	/**
@@ -162,7 +182,18 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testClearTestPlans() {
-		fail("Not yet implemented");
+		manager.addTestPlan("Plan1");
+        manager.addTestPlan("Plan2");
+
+        TestCase testCase = new TestCase("1", "Type", "Description", "Expected");
+        manager.addTestCase(testCase);
+        manager.clearTestPlans();
+
+        assertEquals(1, manager.getTestPlanNames().length, "Only the failing test list should remain");
+        assertEquals(FailingTestList.FAILING_TEST_LIST_NAME, manager.getTestPlanNames()[0],
+                     "Only the failing test list should remain");
+        assertEquals(manager.getCurrentTestPlan(), manager.getCurrentTestPlan(), 
+                     "Current test plan should be the failing test list");
 	}
 
 }

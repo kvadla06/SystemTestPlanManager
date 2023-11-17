@@ -162,4 +162,29 @@ class AbstractTestPlanTest {
 	    assertEquals(plan1.hashCode(), plan2.hashCode());
 	    assertNotEquals(plan1.hashCode(), plan3.hashCode());
 	}
+	
+	@Test
+    void testGetTestCasesAsArray() {
+
+		AbstractTestPlan testPlan = new AbstractTestPlan("TestPlanName");
+
+        TestCase testCase1 = new TestCase("ID1", "Type1", "Description1", "Expected1");
+        TestCase testCase2 = new TestCase("ID2", "Type2", "Description2", "Expected2");
+        testPlan.addTestCase(testCase1);
+        testPlan.addTestCase(testCase2);
+
+        String[][] testCasesArray = testPlan.getTestCasesAsArray();
+
+        assertNotNull(testCasesArray, "Test cases array should not be null");
+
+        assertEquals("ID1", testCasesArray[0][0], "Mismatch in test case ID for first test case");
+        assertEquals("Type1", testCasesArray[0][1], "Mismatch in test type for first test case");
+        assertEquals("Description1", testCasesArray[0][2], "Mismatch in test description for first test case");
+        assertEquals("Expected1", testCasesArray[0][3], "Mismatch in expected results for first test case");
+
+        assertEquals("ID2", testCasesArray[1][0], "Mismatch in test case ID for second test case");
+        assertEquals("Type2", testCasesArray[1][1], "Mismatch in test type for second test case");
+        assertEquals("Description2", testCasesArray[1][2], "Mismatch in test description for second test case");
+        assertEquals("Expected2", testCasesArray[1][3], "Mismatch in expected results for second test case");
+    }
 }
