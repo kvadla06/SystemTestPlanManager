@@ -5,7 +5,10 @@ package edu.ncsu.csc216.stp.model.manager;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import edu.ncsu.csc216.stp.model.test_plans.FailingTestList;
 
 /**
  * This JUnit test class tests the methods of the TestPlanManager class
@@ -13,6 +16,11 @@ import org.junit.jupiter.api.Test;
  *
  */
 class TestPlanManagerTest {
+	
+	@BeforeEach
+	public void setUp() {
+		manager = new TestPlanManager();
+	}
 
 	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#TestPlanManager()}.
@@ -55,9 +63,23 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testAddTestPlan() {
-		fail("Not yet implemented");
+		String testPlanName = "Test Plan Name 1";
+		manager.addTestPlan(testPlanName);
+		assertTrue(arrayContains(manager.getTestPlanNames(), testPlanName),
+				"Test plan should be added to the list");
 	}
 
+	/**
+	 * Test for invalid plan name
+	 */
+	@Test
+	public void testAddTestPlanInvalidName() {
+		String testPlanName = FailingTestList.FAILING_TEST_LIST_NAME;
+		
+		assertThrows(IllegalArgumentException.class, () -> manager.addTestPlan(testPlanName),
+				"Should throw IllegalArgumentException for invalid name");
+	}
+	
 	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#getTestPlanNames()}.
 	 * tests to get test plan names
@@ -90,7 +112,14 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testEditTestPlan() {
-		fail("Not yet implemented");
+		manager.addTestPlan("Test Plan A");
+		String newTestPlanName = "Edited Test Plan";
+		
+		manager.setCurrentTestPlan("Test Plan A");
+		manager.editTestPlan(newTestPlanName);
+		
+		assertTrue(arrayContainens(manager.getTestPlanNames(), newTestPlanName),
+				"Test plan should be renamed in the list");
 	}
 
 	/**
@@ -98,7 +127,9 @@ class TestPlanManagerTest {
 	 */
 	@Test
 	void testRemoveTestPlan() {
-		fail("Not yet implemented");
+		manager.addTestPlan("Test Plan A");
+		manager.setCurrentTestPlan("Test Plan A");
+		manger. 
 	}
 
 	/**
