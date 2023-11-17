@@ -31,21 +31,11 @@ class TestPlanManagerTest {
 	}
 
 	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#loadTestPlans(java.io.File)}.
-	 * Tests whether the test plans load
-	 */
-	@Test
-	void testLoadTestPlans() {
-		
-	}
-
-	/**
 	 * Test method for {@link edu.ncsu.csc216.stp.model.manager.TestPlanManager#isChanged()}.
 	 * tests whether the test plan undergoes changes
 	 */
 	@Test
 	void testIsChanged() {
-		TestPlanManager manager = new TestPlanManager();
         assertFalse(manager.isChanged(), "Manager indicates changes when it should not");
 
         manager.addTestPlan("Plan1");
