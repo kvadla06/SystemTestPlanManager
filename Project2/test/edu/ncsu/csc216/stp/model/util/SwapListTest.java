@@ -179,6 +179,13 @@ class SwapListTest {
 		assertEquals("cherry", test.get(3));
 		assertEquals("blueberries", test.get(4));
 		
+		test.moveToBack(2);
+		assertEquals("apple", test.get(0));
+		assertEquals("pear", test.get(1));
+		assertEquals("cherry", test.get(2));
+		assertEquals("blueberries", test.get(3));
+		assertEquals("banana", test.get(4));
+		
 		
 	}
 

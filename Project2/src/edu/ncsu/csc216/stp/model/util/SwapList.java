@@ -137,7 +137,7 @@ public class SwapList<E> implements ISwapList<E> {
 		if (idx != size - 1) {
 			E back = list[idx];
 			list[idx] = null;
-			for (int i = 0; i < size; i++) {
+			for (int i = idx; i < size; i++) {
 				list[i] = list[i + 1];
 			}
 			list[size - 1] = back;
