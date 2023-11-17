@@ -115,8 +115,9 @@ public class SwapList<E> implements ISwapList<E> {
 		checkIndex(idx);
 		if (idx != 0) {
 			E front = list[idx];
-			for (int i = 0; i < size; i++) {
-				list[i + 1] = list[i];
+			list[idx] = null;
+			for (int i = idx; i > 0; i--) {
+				list[i] = list[i - 1];
 			}
 			list[0] = front;
 		}
@@ -135,8 +136,9 @@ public class SwapList<E> implements ISwapList<E> {
 		checkIndex(idx);
 		if (idx != size - 1) {
 			E back = list[idx];
-			for (int i = size; i <= 0; i--) {
-				list[i - 1] = list[i];
+			list[idx] = null;
+			for (int i = 0; i < size; i++) {
+				list[i] = list[i + 1];
 			}
 			list[size - 1] = back;
 		}

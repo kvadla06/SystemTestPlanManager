@@ -19,7 +19,8 @@ class LogTest {
 	 */
 	@Test
 	void testLog() {
-		fail("Not yet implemented");
+		Log<String> test = new Log<String>();
+		assertEquals(0, test.size());
 	}
 
 	/**
@@ -27,7 +28,24 @@ class LogTest {
 	 */
 	@Test
 	void testAdd() {
-		fail("Not yet implemented");
+		Log<String> test = new Log<String>();
+		
+		assertThrows(NullPointerException.class, () -> test.add(null));
+		
+		test.add("apple");
+		assertEquals("apple", test.get(0));
+		//test growing array
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("apple");
+		test.add("banana");
+		assertEquals("banana", test.get(10));
 	}
 
 	/**
@@ -35,15 +53,9 @@ class LogTest {
 	 */
 	@Test
 	void testGet() {
-		fail("Not yet implemented");
+		Log<String> test = new Log<String>();
+		
+		assertThrows(IndexOutOfBoundsException.class, () -> test.get(-1));
 	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.util.Log#size()}.
-	 */
-	@Test
-	void testSize() {
-		fail("Not yet implemented");
-	}
-
+	
 }

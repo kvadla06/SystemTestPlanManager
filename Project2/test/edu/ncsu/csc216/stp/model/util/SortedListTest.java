@@ -19,7 +19,8 @@ class SortedListTest {
 	 */
 	@Test
 	void testSortedList() {
-		fail("Not yet implemented");
+		SortedList<String> test = new SortedList<String>();
+		assertEquals(0, test.size());
 	}
 
 	/**
@@ -27,7 +28,21 @@ class SortedListTest {
 	 */
 	@Test
 	void testAdd() {
-		fail("Not yet implemented");
+		SortedList<String> test = new SortedList<String>();
+		
+		test.add("banana");
+		
+		assertEquals("banana", test.get(0));
+		assertThrows(NullPointerException.class, () -> test.add(null));
+		assertThrows(IllegalArgumentException.class, () -> test.add("banana"));
+		
+		test.add("carrot");
+		assertEquals("carrot", test.get(1));
+		test.add("apple");
+		assertEquals("apple", test.get(0));
+		test.add("eggplant");
+		test.add("dragonfruit");
+		assertEquals("dragonfruit", test.get(3));
 	}
 
 	/**
@@ -35,7 +50,16 @@ class SortedListTest {
 	 */
 	@Test
 	void testRemove() {
-		fail("Not yet implemented");
+		SortedList<String> test = new SortedList<String>();
+		
+		test.add("apple");
+		test.add("banana");
+		test.add("carrot");
+		test.add("dragonfruit");
+		assertThrows(IndexOutOfBoundsException.class, () -> test.remove(-1));
+		assertEquals("carrot", test.remove(2));
+		assertEquals(3, test.size());
+		assertEquals("apple", test.remove(0));
 	}
 
 	/**
@@ -43,23 +67,15 @@ class SortedListTest {
 	 */
 	@Test
 	void testContains() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.util.SortedList#get(int)}.
-	 */
-	@Test
-	void testGet() {
-		fail("Not yet implemented");
-	}
-
-	/**
-	 * Test method for {@link edu.ncsu.csc216.stp.model.util.SortedList#size()}.
-	 */
-	@Test
-	void testSize() {
-		fail("Not yet implemented");
+		SortedList<String> test = new SortedList<String>();
+		
+		test.add("apple");
+		test.add("banana");
+		test.add("carrot");
+		test.add("dragonfruit");
+		
+		assertTrue(test.contains("dragonfruit"));
+		assertFalse(test.contains("eggplant"));
 	}
 
 }
