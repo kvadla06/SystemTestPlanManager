@@ -17,16 +17,13 @@ import edu.ncsu.csc216.stp.model.tests.TestCase;
  */
 class FailingTestListTest {
 	
-	/** constructor for failing test case*/
-	private TestCase failingCase;
-	
 	/**
 	 * Sets up and builds the failing test list to be tested
 	 */
 	@BeforeEach
 	public void setUp() {
-		FailingTestList list = new FailingTestList();
-		failingCase = new TestCase("failA", "Normal", "Test should fail", "Failing");
+		new FailingTestList();
+		new TestCase("failA", "Normal", "Test should fail", "Failing");
 	}
 
 
