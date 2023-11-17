@@ -142,9 +142,10 @@ public class TestPlanReader {
 				}
 				String results = resultReader.next();
 				resultReader.close();
-				testCase.addTestResult(testResult, results);
-				return testCase;				
+				testCase.addTestResult(testResult, results);			
 			}
+			testCaseReader.close();
+			return testCase;
 		} catch (IllegalArgumentException | NoSuchElementException e) {
 			//
 		}

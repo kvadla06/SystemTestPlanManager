@@ -150,6 +150,37 @@ class SwapListTest {
 		test.moveToBack(3);
 		assertEquals("carrot", test.get(3));
 	}
+	
+	/**
+	 * Test method for {@link edu.ncsu.csc216.stp.model.util.SwapList#moveToBack(int)}.
+	 */
+	@Test
+	void testMoveToBack1() {
+		SwapList<String> test = new SwapList<String>();
+		
+		test.add("apple");
+		assertEquals("apple", test.get(0));
+		test.add("pear");
+		assertEquals("apple", test.get(0));
+		assertEquals("pear", test.get(1));
+		test.add("banana");
+		assertEquals("apple", test.get(0));
+		assertEquals("pear", test.get(1));
+		assertEquals("banana", test.get(2));
+		test.add("cherry");
+		assertEquals("apple", test.get(0));
+		assertEquals("pear", test.get(1));
+		assertEquals("banana", test.get(2));
+		assertEquals("cherry", test.get(3));
+		test.add("blueberries");
+		assertEquals("apple", test.get(0));
+		assertEquals("pear", test.get(1));
+		assertEquals("banana", test.get(2));
+		assertEquals("cherry", test.get(3));
+		assertEquals("blueberries", test.get(4));
+		
+		
+	}
 
 		
 
