@@ -104,7 +104,7 @@ public class TestCase {
 	 */
 	private void setTestDescription(String testDescription) {
 		if (testDescription == null || testDescription.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid test results.");
+            throw new IllegalArgumentException("Invalid test information.");
         }
         this.testDescription = testDescription;
 	}
