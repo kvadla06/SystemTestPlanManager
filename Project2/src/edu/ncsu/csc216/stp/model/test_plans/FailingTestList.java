@@ -28,11 +28,11 @@ public class FailingTestList extends AbstractTestPlan {
 	 */
 	@Override
 	public void addTestCase(TestCase t) {
-		if (!t.isTestCasePassing()) {
-			super.addTestCase(t);
-		} else {
-			throw new IllegalArgumentException("Cannot add passing test case.");
-		}
+		 if (t.isTestCasePassing()) {
+		        throw new IllegalArgumentException("Cannot add passing test case.");
+		    } else {
+		        super.addTestCase(t);
+		    }
 	}
 
 	/**
@@ -57,14 +57,14 @@ public class FailingTestList extends AbstractTestPlan {
 	@Override
 	public String[][] getTestCasesAsArray() {
 		int size = getTestCases().size();
-		String[][] testCasesArray = new String[size][3];
-		for (int i = 0; i < size; i++) {
-			TestCase testCase = getTestCase(i);
-			testCasesArray[i][0] = testCase.getTestCaseId();
-			testCasesArray[i][1] = testCase.getTestType();
-			testCasesArray[i][2] = testCase.getTestPlan() != null ? testCase.getTestPlan().getTestPlanName() : "";
-		}
-		return testCasesArray;
+	    String[][] testCasesArray = new String[size][3];
+	    for (int i = 0; i < size; i++) {
+	        TestCase testCase = getTestCase(i);
+	        testCasesArray[i][0] = testCase.getTestCaseId();
+	        testCasesArray[i][1] = testCase.getTestType();
+	        testCasesArray[i][2] = (testCase.getTestPlan() != null) ? testCase.getTestPlan().getTestPlanName() : "";
+	    }
+	    return testCasesArray;
 	}
 	
 	/**
