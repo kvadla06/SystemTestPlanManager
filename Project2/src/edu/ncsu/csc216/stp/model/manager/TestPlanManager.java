@@ -4,8 +4,8 @@
 package edu.ncsu.csc216.stp.model.manager;
 
 import java.io.File;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 
 import edu.ncsu.csc216.stp.model.io.TestPlanReader;
 import edu.ncsu.csc216.stp.model.io.TestPlanWriter;
@@ -48,18 +48,20 @@ public class TestPlanManager<E extends Comparable<E>> {
 	 */
 	public void loadTestPlans(File testPlanFile) {
 		ISortedList<TestPlan> loadedTestPlans = TestPlanReader.readTestPlansFile(testPlanFile);
-	    
-	    List<TestPlan> loadedList = new ArrayList<>();
-	    for (int i = 0; i < loadedTestPlans.size(); i++) {
-	        loadedList.add(loadedTestPlans.get(i));
+	    int size = loadedTestPlans.size();
+
+	    TestPlan[] plansArray = new TestPlan[size];
+	    for (int i = 0; i < size; i++) {
+	        plansArray[i] = loadedTestPlans.get(i);
 	    }
-	    
-	    for (TestPlan plan : loadedList) {
+
+	    for (int i = 0; i < plansArray.length; i++) {
+	        TestPlan plan = plansArray[i];
 	        if (!testPlans.contains(plan)) {
 	            testPlans.add(plan);
 	        }
 	    }
-	    
+
 	    setCurrentTestPlan(FailingTestList.FAILING_TEST_LIST_NAME);
 	    isChanged = true;
 	}
