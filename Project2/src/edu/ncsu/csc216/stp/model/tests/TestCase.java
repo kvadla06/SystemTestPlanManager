@@ -183,7 +183,7 @@ public class TestCase {
 	public String getActualResultsLog() {
 		String log = "";
         for (int i = 0; i < testResults.size(); i++) {
-            log += "- " + testResults.get(i).toString() + "\n";
+            log += "- " + testResults.get(i).toString().trim() + "\n";
         }
         return log;
 	}
