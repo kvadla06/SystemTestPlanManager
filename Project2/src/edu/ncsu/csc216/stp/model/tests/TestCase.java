@@ -82,7 +82,7 @@ public class TestCase {
 	 */
 	private void setTestType(String testType) {
 		if (testType == null || testType.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid test information.");
+            throw new IllegalArgumentException("Invalid test results.");
         }
         this.testType = testType;
 	}
@@ -127,7 +127,7 @@ public class TestCase {
 	 */
 	private void setExpectedResults(String expectedResults) {
 		if (expectedResults == null || expectedResults.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid test information.");
+            throw new IllegalArgumentException("Invalid test results.");
         }
         this.expectedResults = expectedResults;
 	}
@@ -144,7 +144,7 @@ public class TestCase {
             TestResult result = new TestResult(passing, actualResults);
             testResults.add(result);
         } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid test information.");
+            throw new IllegalArgumentException("Invalid test results.");
         }
 	}
 	
