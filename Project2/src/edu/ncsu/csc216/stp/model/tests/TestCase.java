@@ -216,10 +216,10 @@ public class TestCase {
 	 * @return a string representation of the test case
 	 */
 	public String toString() {
-		String output = "TestCase " + testCaseId + ": " + testDescription + "\n";
-        output += "Type: " + testType + "\n";
-        output += "Expected Results: " + expectedResults + "\n";
-        output += "Actual Results:\n" + getActualResultsLog();
+		String output = "# " + testCaseId + "," + testType + "\n";
+        output += "* " + testDescription + "\n";
+        output += "* " + expectedResults + "\n";
+        output += getActualResultsLog();
         return output;
 	}
 	

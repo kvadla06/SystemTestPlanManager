@@ -33,7 +33,7 @@ public class TestPlanWriter {
 				ISwapList<TestCase> testCases = testPlans.get(i).getTestCases();
 				fileWriter.println("! " + testPlans.get(i).getTestPlanName());
 				for (int j = 0; j < testCases.size(); j++) {
-					fileWriter.println(testCases.get(j).toString());
+					fileWriter.print(testCases.get(j).toString());
 				}
 			}
 			fileWriter.close();

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import edu.ncsu.csc216.stp.model.test_plans.TestPlan;
 import edu.ncsu.csc216.stp.model.tests.TestCase;
+import edu.ncsu.csc216.stp.model.util.ISortedList;
 import edu.ncsu.csc216.stp.model.util.SortedList;
 
 /**
@@ -27,7 +28,7 @@ class TestPlanWriterTest {
 	 */
 	@Test
 	void testWriteTestPlanFile() {
-		SortedList<TestPlan> testPlans = new SortedList<TestPlan>();
+		ISortedList<TestPlan> testPlans = new SortedList<TestPlan>();
 		TestPlan testPlan = new TestPlan("TestPlan1");
 		testPlans.add(testPlan);
 		TestCase t1 = new TestCase("ID 0", "type 0", "description 0", "expected results 0");
@@ -42,21 +43,17 @@ class TestPlanWriterTest {
 		t3.addTestResult(true, "actual results 2-2");
 		testPlan.addTestCase(t3);
 		
-		TestPlan testPlan2 = new TestPlan("PackScheduler");
+		TestPlan testPlan2 = new TestPlan("TestPlan2");
 		testPlans.add(testPlan2);
-		TestCase t1P = new TestCase("test0", "Invalid", "description", "expected results\n" + "with multiple lines");
-		t1P.addTestResult(true, "actual results");
-		t1P.addTestResult(false, "actual results");
-		testPlan.addTestCase(t1);
-		TestCase t2P = new TestCase("test1", "Equivalence Class", "description", "expected results");
-		t2P.addTestResult(true, "actual results");
-		testPlan.addTestCase(t2);
+		
 		
 		try {
-			TestPlanWriter.writeTestPlanFile("test-files/actual_task_backlog.txt", testPlans);
+			TestPlanWriter.writeTestPlanFile(new File("test-files/actual_out.txt"), testPlans);
 		} catch (IllegalArgumentException e) {
 			fail("Cannot write to course records file");
 		}
+		
+		checkFiles("test-files/expected_out.txt", "test-files/actual_out.txt");
 	}
 	
 	/**
