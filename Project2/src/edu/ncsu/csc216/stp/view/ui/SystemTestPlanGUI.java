@@ -92,7 +92,7 @@ public class SystemTestPlanGUI extends JFrame implements ActionListener {
 	public SystemTestPlanGUI() {
 		super();
 		
-		manager = new TestPlanManager();
+		manager = new TestPlanManager(); 
 		
 		//Set up general GUI info
 		setSize(1200, 700);

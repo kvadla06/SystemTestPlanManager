@@ -27,8 +27,8 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 	/**
 	 * Adds element to list
 	 * @param element element to be added to list
-	 * @throws NullPointerException “Cannot add null element.” if the parameter is null.
-	 * @throws IllegalArgumentException “Cannot add duplicate element” if the parameter is a duplicate of an existing element.
+	 * @throws NullPointerException Cannot add null element if the parameter is null.
+	 * @throws IllegalArgumentException Cannot add duplicate element if the parameter is a duplicate of an existing element.
 	 */
 	@Override
 	public void add(E element) {
@@ -97,7 +97,7 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 	 * Removes element from list
 	 * @param idx index to remove element from
 	 * @return element being removed
-	 * @throws IndexOutOfBoundsException “Invalid index.” if the index parameter is out of bounds for the list.
+	 * @throws IndexOutOfBoundsException Invalid index if the index parameter is out of bounds for the list.
 	 */
 	@Override
 	public E remove(int idx) {
@@ -126,7 +126,7 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 	/**
 	 * Checks element at index 
 	 * @param idx index to check element
-	 * @throws IndexOutOfBoundsException “Invalid index.” if the index parameter is out of bounds for the list.
+	 * @throws IndexOutOfBoundsException Invalid index if the index parameter is out of bounds for the list.
 	 */
 	private void checkIndex(int idx) {
 		if (idx < 0 || idx >= size()) {
@@ -156,7 +156,7 @@ public class SortedList<E extends Comparable<E>> implements ISortedList<E> {
 	 * Gets element from list
 	 * @param idx index to get element from
 	 * @return element in list
-	 * @throws IndexOutOfBoundsException “Invalid index.” if the index parameter is out of bounds for the list.
+	 * @throws IndexOutOfBoundsException Invalid index if the index parameter is out of bounds for the list.
 	 */
 	@Override
 	public E get(int idx) {
