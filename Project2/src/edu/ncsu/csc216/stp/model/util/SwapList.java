@@ -17,15 +17,30 @@ public class SwapList<E> implements ISwapList<E> {
 	/** size of list */
 	private int size;
 	
+	/** 
+	 * Constructor for SwapList
+	 */
+	@SuppressWarnings("unchecked")
+	public SwapList() {
+		list = (E[]) new Object[INITIAL_CAPACITY];
+		size = 0;
+	}
+	
 	/**
 	 * Adds element to list
 	 * @param element element to be added to list
 	 * @throws NullPointerException “Cannot add null element.” if the parameter is null.
 	 * @throws IllegalArgumentException “Cannot add element”
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void add(E element) {
-		// TODO Auto-generated method stub
+		if (element == null) {
+			throw new NullPointerException("Cannot add null element");
+		}
+		checkCapacity(size + 1);
+		list[size] = element;
+		size++;
 		
 	}
 
@@ -37,20 +52,36 @@ public class SwapList<E> implements ISwapList<E> {
 	 */
 	@Override
 	public E remove(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		checkIndex(idx);
+		
+		E initial = list[idx];
+		list[idx] = null;
+		
+		for (int i = idx; i < size; i++) {
+			E temp = list[i + 1];
+			list[i] = temp;
+		}
+		
+		list[size - 1] = null;
+		size--;
+		return initial;
 	}
 
 	/**
-	 *  Moves the element at the given index to index+1.  If the element is
-	 * already at the end of the list, the list is not changed.
-	 * @param idx index of element to move down
+	 *  Moves the element at the given index to index-1.  If the element is
+	 * already at the front of the list, the list is not changed.
+	 * @param idx index of element to move up
 	 * @throws IndexOutOfBoundsException if the idx is out of bounds
 	 * 		for the list
 	 */
 	@Override
 	public void moveUp(int idx) {
-		// TODO Auto-generated method stub
+		checkIndex(idx);
+		if (idx != 0) {
+			E temp = list[idx - 1];
+			list[idx - 1] = list[idx];
+			list[idx] = temp;
+		}
 		
 	}
 
@@ -63,7 +94,12 @@ public class SwapList<E> implements ISwapList<E> {
 	 */
 	@Override
 	public void moveDown(int idx) {
-		// TODO Auto-generated method stub
+		checkIndex(idx);
+		if (idx != size - 1) {
+			E temp = list[idx + 1];
+			list[idx + 1] = list[idx];
+			list[idx] = temp;
+		}
 		
 	}
 	
@@ -76,7 +112,14 @@ public class SwapList<E> implements ISwapList<E> {
 	 */
 	@Override
 	public void moveToFront(int idx) {
-		// TODO Auto-generated method stub
+		checkIndex(idx);
+		if (idx != 0) {
+			E front = list[idx];
+			for (int i = 0; i < size; i++) {
+				list[i + 1] = list[i];
+			}
+			list[0] = front;
+		}
 		
 	}
 
@@ -89,7 +132,14 @@ public class SwapList<E> implements ISwapList<E> {
 	 */
 	@Override
 	public void moveToBack(int idx) {
-		// TODO Auto-generated method stub
+		checkIndex(idx);
+		if (idx != size - 1) {
+			E back = list[idx];
+			for (int i = size; i <= 0; i--) {
+				list[i - 1] = list[i];
+			}
+			list[size - 1] = back;
+		}
 		
 	}
 
@@ -102,8 +152,9 @@ public class SwapList<E> implements ISwapList<E> {
 	 */
 	@Override
 	public E get(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		checkIndex(idx);
+		
+		return list[idx];
 	}
 
 	/**
@@ -112,24 +163,33 @@ public class SwapList<E> implements ISwapList<E> {
 	 */
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return size;
 	}
 	
 	/**
 	 * Checks capacity of the list
-	 * @param idx of element
+	 * @param size new size of list
 	 */
-	private void checkCapacity(int idx) {
-		
+	@SuppressWarnings("unchecked")
+	private void checkCapacity(int size) {
+		if (list.length <= size) {
+			E[] list2 = (E[]) new Object[list.length * 2];
+			for (int i = 0; i < list.length; i++) {
+				list2[i] = list[i];
+			}
+			this.list = list2;
+		}
 	}
 	
 	/**
 	 * Checks index of the list
 	 * @param idx of element
+	 * @throws IllegalArgumentException if index is out of bounds
 	 */
 	private void checkIndex(int idx) {
-		
+		if (idx < 0 || idx >= size) {
+			throw new IndexOutOfBoundsException();
+		}
 	}
 
 }

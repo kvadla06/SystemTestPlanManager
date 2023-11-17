@@ -38,8 +38,8 @@ public class Log<E> implements ILog<E> {
 			throw new NullPointerException("Cannot add null element");
 		}
 		
-		if (size == INIT_CAPACITY) {
-			E[] log2 = (E[]) new Object[INIT_CAPACITY * 2];
+		if (size >= log.length) {
+			E[] log2 = (E[]) new Object[log.length * 2];
 			for (int i = 0; i < log.length; i++) {
 				log2[i] = log[i];
 			}
