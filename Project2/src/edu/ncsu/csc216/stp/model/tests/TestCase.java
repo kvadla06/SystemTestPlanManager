@@ -60,7 +60,7 @@ public class TestCase {
 	 */
 	private void setTestCaseId(String testCaseId) {
 		if (testCaseId == null || testCaseId.trim().isEmpty()) {
-            throw new IllegalArgumentException("Invalid test results.");
+            throw new IllegalArgumentException("Invalid test information.");
         }
         this.testCaseId = testCaseId;
 	}
