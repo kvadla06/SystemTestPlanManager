@@ -6,9 +6,9 @@ The System Test Plan Manager is a Java-based application designed to help softwa
 ✔ Create & Manage Test Plans – Add and organize test cases for different projects.\
 ✔ Edit & Update Test Cases – Modify existing test steps and expected results.\
 ✔ Delete Unnecessary Test Cases – Keep the test plan clean and relevant.\
-✔ Graphical User Interface (GUI) – Intuitive design for easy navigation and management.\
+✔ Graphical User Interface (GUI) – Intuitive design for easy navigation and management.
 
 # Technologies Used
 Java – Core programming language.\
 Swing/JavaFX – For the graphical user interface.\
-File Handling – Used for storing test plan data persistently.\
+File Handling – Used for storing test plan data persistently.
